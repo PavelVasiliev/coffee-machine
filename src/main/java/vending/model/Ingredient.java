@@ -1,39 +1,44 @@
 package vending.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Setter;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import vending.my_enum.IngredientName;
 
 import java.util.Objects;
 
-@AllArgsConstructor
+@Getter
+@NoArgsConstructor
 public class Ingredient {
     private IngredientName name;
-    @Setter
     private int amount;
-    private int price;
+    private double price;
 
-
-    public Ingredient(IngredientName name) {
+    public Ingredient(IngredientName name, int amount) {
         this.name = name;
         this.amount = amount;
     }
 
-    public int getAmount() {
-        return amount;
+    public Ingredient(IngredientName name) {
+        this.name = name;
     }
 
-    public double getPrice() {
-        return (double) price/amount;
+    public void replenish(Ingredient ingredient, int newPrice) {
+        int temp = (int) (price * amount + newPrice);
+        this.amount += ingredient.amount;
+        this.price = (double) temp / amount;
     }
 
-    public IngredientName getName() {
-        return name;
+    public void calculatePrice(int price) {
+        this.price = (double)price / amount;
     }
 
     public void use(int amount) {
         this.amount -= amount;
+    }
+
+    public IngredientName getName() {
+        return name;
     }
 
     @Override

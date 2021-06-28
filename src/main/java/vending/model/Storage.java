@@ -1,44 +1,48 @@
 package vending.model;
 
-import java.util.Iterator;
-import java.util.Map;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import vending.my_enum.VendingAction;
+
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+@Getter
+@NoArgsConstructor
 public class Storage {
-    private Map<Ingredient, Double> ingredientsPrice;
-
-    public Storage(Map<Ingredient, Double> ingredientsAmount) {
-        this.ingredientsPrice = ingredientsAmount;
-    }
+    private Set<Ingredient> ingredients = new HashSet<>();
+    private int money = 0;
 
     public Set<Ingredient> getStorageInfo() {
-        return ingredientsPrice.keySet();
+        return ingredients;
     }
 
-
-    public void putInStorage(Ingredient ingredient) {
-        if (ingredientsPrice.containsKey(ingredient)) {
-            Iterator<Ingredient> iterator = ingredientsPrice.keySet().iterator();
-            Ingredient i;
-            while (iterator.hasNext()) {
-                i = iterator.next();
-                if (i.equals(ingredient)) {
-                    i.setAmount(i.getAmount() + ingredient.getAmount());
-                    double newPrice = recalculatePrice(ingredient, i.getAmount());
-                    ingredientsPrice.put(i, newPrice);
+    public void putInStorage(Ingredient newIngredient, int newPrice) {
+        if(!ingredients.contains(newIngredient)){
+            newIngredient.calculatePrice(newPrice);
+            ingredients.add(newIngredient);
+        } else {
+            Ingredient ingredient;
+            for (Ingredient i : ingredients) {
+                if (i.equals(newIngredient)) {
+                    ingredient = i;
+                    ingredient.replenish(newIngredient, newPrice);
                     break;
                 }
             }
-        } else {
-            System.out.println("New ingredient - " + ingredient.getName());
         }
     }
 
-    private double recalculatePrice(Ingredient ingredient, int amount) {
-        return (ingredient.getPrice() + ingredientsPrice.get(ingredient)) / amount;
+    public void money(VendingAction action, int money) {
+        switch (action) {
+            case TAKE_MONEY -> this.money += money;
+            case GIVE_MONEY -> this.money -= money;
+        }
     }
 
-    public Map<Ingredient, Double> getIngredientsPrice() {
-        return ingredientsPrice;
+    public Ingredient get(Ingredient ingredient) {
+        Set<Ingredient> set = ingredients.stream().filter(ingredient::equals).collect(Collectors.toSet());
+        return set.stream().findFirst().orElse(new Ingredient());
     }
 }
