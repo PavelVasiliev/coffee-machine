@@ -19,7 +19,7 @@ public class Storage {
     }
 
     public void putInStorage(Ingredient newIngredient, int newPrice) {
-        if(!ingredients.contains(newIngredient)){
+        if (!ingredients.contains(newIngredient)) {
             newIngredient.calculatePrice(newPrice);
             ingredients.add(newIngredient);
         } else {

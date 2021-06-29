@@ -6,7 +6,7 @@ import vending.model.Ingredient;
 import vending.model.VendingMachine;
 import vending.my_enum.VendingAction;
 
-import java.util.Map;
+import java.util.Set;
 
 public class Maker implements Command {
     private final VendingMachine machine;
@@ -32,11 +32,11 @@ public class Maker implements Command {
     private void makeCoffee(VendingMachine machine, Coffee coffee) {
         System.out.printf("Making %s\n", coffee.getName().toLowerCase());
 
-        Map<Ingredient, Integer> ingredientsForCoffee = coffee.getIngredients();
+        Set<Ingredient> ingredientsForCoffee = coffee.getIngredients();
         for (Ingredient ingredientInMachine : machine.getStorage().getStorageInfo()) {
-            for (Ingredient ingredient : ingredientsForCoffee.keySet()) {
+            for (Ingredient ingredient : ingredientsForCoffee) {
                 if (ingredientInMachine.equals(ingredient)) {
-                    ingredientInMachine.use(ingredientsForCoffee.get(ingredient));
+                    ingredientInMachine.use(ingredient.getAmount());
                 }
             }
         }

@@ -37,9 +37,9 @@ public class Main {
 
         Command checker = new Checker(machine);
         Command maker = new Maker(machine, checker);
-//        for(int i = 10; i > 0; i--){
-//            machine.execute(maker, getRandomCoffee(coffeeSet));
-//        }
+        for(int i = 10; i > 0; i--){
+            machine.execute(maker, getRandomCoffee(coffeeSet));
+        }
         machine.info();
         coffeeBeans = new Ingredient(IngredientName.COFFEE_BEANS, 500);
         watter = new Ingredient(IngredientName.WATTER, 5000);
@@ -49,9 +49,6 @@ public class Main {
         machine.execute(filler, watter, 100);
         machine.execute(filler, milk, 200);
         machine.execute(filler, cup, 250);
-//        for(int i = 10; i > 0; i--){
-//            machine.execute(maker, getRandomCoffee(coffeeSet));
-//        }
         machine.info();
 
         coffeeBeans = new Ingredient(IngredientName.COFFEE_BEANS, 500);
@@ -63,6 +60,10 @@ public class Main {
         machine.execute(filler, milk, 200);
         machine.execute(filler, cup, 250);
         machine.info();
+
+        for (int i = 10; i > 0; i--) {
+            machine.execute(maker, getRandomCoffee(coffeeSet));
+        }
 
         coffeeBeans = new Ingredient(IngredientName.COFFEE_BEANS, 500);
         watter = new Ingredient(IngredientName.WATTER, 5000);
@@ -78,12 +79,13 @@ public class Main {
 
     static Set<Coffee> createCoffeeSet() {
         Set<Coffee> result = new HashSet<>();
-        for(CoffeeType coffeeType : CoffeeType.values()){
+        for (CoffeeType coffeeType : CoffeeType.values()) {
             result.add(coffeeType.make(coffeeType));
         }
 
         return result;
     }
+
     static Coffee getRandomCoffee(Set<Coffee> set) {
         return set.stream().skip(new Random().nextInt(set.size())).findFirst().orElse(null);
     }

@@ -5,7 +5,6 @@ import vending.model.Coffee;
 import vending.model.Ingredient;
 import vending.model.VendingMachine;
 
-import java.util.Map;
 import java.util.Set;
 
 public class Checker implements Command {
@@ -32,12 +31,12 @@ public class Checker implements Command {
     }
 
     private boolean checkIngredients(Coffee coffee) {
-        Map<Ingredient, Integer> ingredientsForCoffeeAmounts = coffee.getIngredients();
+        Set<Ingredient> ingredientsForCoffeeAmounts = coffee.getIngredients();
         Set<Ingredient> machineStore = machine.getStorage().getStorageInfo();
-        for (Ingredient ingredientForCoffee : ingredientsForCoffeeAmounts.keySet()) {
+        for (Ingredient ingredientForCoffee : ingredientsForCoffeeAmounts) {
             for (Ingredient ingredientInStore : machineStore) {
                 if (ingredientInStore.equals(ingredientForCoffee)) {
-                    if (ingredientInStore.getAmount() <= ingredientsForCoffeeAmounts.get(ingredientForCoffee)) {
+                    if (ingredientInStore.getAmount() <= ingredientForCoffee.getAmount()) {
                         System.out.printf("Not enough %s.\n", ingredientInStore.getName());
                         return false;
                     }

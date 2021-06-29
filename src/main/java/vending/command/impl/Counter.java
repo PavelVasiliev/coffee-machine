@@ -6,7 +6,7 @@ import vending.model.Ingredient;
 import vending.model.Storage;
 import vending.model.VendingMachine;
 
-import java.util.Map;
+import java.util.Set;
 
 public class Counter implements Command {
     private final VendingMachine machine;
@@ -18,16 +18,15 @@ public class Counter implements Command {
     @Override
     public int countPrice(Coffee coffee) {
         Storage storage = machine.getStorage();
-        Map<Ingredient, Integer> ingredientsForCoffee = coffee.getIngredients();
-        double result = 0;
-        for (Ingredient i4Coffee : ingredientsForCoffee.keySet()) {
+        Set<Ingredient> ingredientsForCoffee = coffee.getIngredients();
+        double cost = 0;
+        for (Ingredient i4Coffee : ingredientsForCoffee) {
             Ingredient i = storage.get(i4Coffee);
             if (i != null) {
-                result += ingredientsForCoffee.get(i4Coffee) * i.getPrice();
+                cost += i4Coffee.getAmount() * i.getPrice();
             }
         }
-
-        return (int) result * 2; //100% extra charge
+        return (int)cost * 2;
     }
 
     @Override
