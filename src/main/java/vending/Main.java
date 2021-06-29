@@ -37,31 +37,50 @@ public class Main {
 
         Command checker = new Checker(machine);
         Command maker = new Maker(machine, checker);
-        machine.execute(maker, getRandomCoffee(coffeeSet));
+//        for(int i = 10; i > 0; i--){
+//            machine.execute(maker, getRandomCoffee(coffeeSet));
+//        }
+        machine.info();
+        coffeeBeans = new Ingredient(IngredientName.COFFEE_BEANS, 500);
+        watter = new Ingredient(IngredientName.WATTER, 5000);
+        milk = new Ingredient(IngredientName.MILK, 2500);
+        cup = new Ingredient(IngredientName.CUP, 100);
+        machine.execute(filler, coffeeBeans, 1200);
+        machine.execute(filler, watter, 100);
+        machine.execute(filler, milk, 200);
+        machine.execute(filler, cup, 250);
+//        for(int i = 10; i > 0; i--){
+//            machine.execute(maker, getRandomCoffee(coffeeSet));
+//        }
+        machine.info();
+
+        coffeeBeans = new Ingredient(IngredientName.COFFEE_BEANS, 500);
+        watter = new Ingredient(IngredientName.WATTER, 5000);
+        milk = new Ingredient(IngredientName.MILK, 2500);
+        cup = new Ingredient(IngredientName.CUP, 100);
+        machine.execute(filler, coffeeBeans, 1200);
+        machine.execute(filler, watter, 100);
+        machine.execute(filler, milk, 200);
+        machine.execute(filler, cup, 250);
+        machine.info();
+
+        coffeeBeans = new Ingredient(IngredientName.COFFEE_BEANS, 500);
+        watter = new Ingredient(IngredientName.WATTER, 5000);
+        milk = new Ingredient(IngredientName.MILK, 2500);
+        cup = new Ingredient(IngredientName.CUP, 100);
+        machine.execute(filler, coffeeBeans, 1200);
+        machine.execute(filler, watter, 100);
+        machine.execute(filler, milk, 200);
+        machine.execute(filler, cup, 250);
+        machine.info();
+
     }
 
     static Set<Coffee> createCoffeeSet() {
         Set<Coffee> result = new HashSet<>();
-        Ingredient coffeeBeans = new Ingredient(IngredientName.COFFEE_BEANS);
-        Ingredient watter = new Ingredient(IngredientName.WATTER);
-        Ingredient milk = new Ingredient(IngredientName.MILK);
-
-        Coffee coffee = new Coffee(CoffeeType.CAPPUCCINO);
-        coffee.receipt(coffeeBeans, 12);
-        coffee.receipt(watter, 200);
-        coffee.receipt(milk, 100);
-        result.add(coffee);
-
-        coffee = new Coffee(CoffeeType.LATTE);
-        coffee.receipt(coffeeBeans, 20);
-        coffee.receipt(watter, 350);
-        coffee.receipt(milk, 100);
-        result.add(coffee);
-
-        coffee = new Coffee(CoffeeType.ESPRESSO);
-        coffee.receipt(coffeeBeans, 16);
-        coffee.receipt(watter, 250);
-        result.add(coffee);
+        for(CoffeeType coffeeType : CoffeeType.values()){
+            result.add(coffeeType.make(coffeeType));
+        }
 
         return result;
     }

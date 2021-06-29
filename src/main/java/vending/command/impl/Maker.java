@@ -23,6 +23,7 @@ public class Maker implements Command {
             int price = new Counter(machine).countPrice(coffee);
             machine.getStorage().money(VendingAction.TAKE_MONEY, price);
             makeCoffee(machine, coffee);
+            System.out.printf("Price is %d\n", price);
             return true;
         }
         return false;

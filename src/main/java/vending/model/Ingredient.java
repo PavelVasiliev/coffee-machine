@@ -25,12 +25,14 @@ public class Ingredient {
 
     public void replenish(Ingredient ingredient, int newPrice) {
         int temp = (int) (price * amount + newPrice);
-        this.amount += ingredient.amount;
-        this.price = (double) temp / amount;
+        this.amount = this.amount + ingredient.amount;
+        temp = 100 * temp / amount;
+
+        this.price = (double) temp / 100.;
     }
 
     public void calculatePrice(int price) {
-        this.price = (double)price / amount;
+        this.price = (double) price / amount;
     }
 
     public void use(int amount) {
