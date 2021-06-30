@@ -20,6 +20,7 @@ public class Filler implements Command {
 
     @Override
     public int countPrice(Coffee coffee) {
+        System.out.println(this + "Cant do anything");
         return -1;
     }
 

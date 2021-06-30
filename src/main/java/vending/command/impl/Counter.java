@@ -26,16 +26,18 @@ public class Counter implements Command {
                 cost += i4Coffee.getAmount() * i.getPrice();
             }
         }
-        return (int)cost * 2;
+        return (int)cost * 2; //100% extra charge
     }
 
     @Override
     public boolean execute(Coffee coffee) {
+        System.out.println(this + "Cant do anything");
         return false;
     }
 
     @Override
     public boolean execute(Ingredient ingredient, int newPrice) {
+        System.out.println(this + "Cant do anything");
         return false;
     }
 }

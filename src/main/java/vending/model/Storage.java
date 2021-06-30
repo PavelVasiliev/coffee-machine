@@ -23,11 +23,9 @@ public class Storage {
             newIngredient.calculatePrice(newPrice);
             ingredients.add(newIngredient);
         } else {
-            Ingredient ingredient;
             for (Ingredient i : ingredients) {
                 if (i.equals(newIngredient)) {
-                    ingredient = i;
-                    ingredient.replenish(newIngredient, newPrice);
+                    i.replenish(newIngredient, newPrice);
                     break;
                 }
             }

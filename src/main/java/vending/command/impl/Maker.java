@@ -19,27 +19,24 @@ public class Maker implements Command {
 
     @Override
     public boolean execute(Coffee coffee) {
-        if (checker.execute(coffee)) {
+        boolean enoughIngredients = checker.execute(coffee);
+        if (enoughIngredients) {
             int price = new Counter(machine).countPrice(coffee);
             machine.getStorage().money(VendingAction.TAKE_MONEY, price);
             makeCoffee(machine, coffee);
             System.out.printf("Price is %d\n", price);
-            return true;
         }
-        return false;
+        return enoughIngredients;
     }
 
     private void makeCoffee(VendingMachine machine, Coffee coffee) {
         System.out.printf("Making %s\n", coffee.getName().toLowerCase());
 
         Set<Ingredient> ingredientsForCoffee = coffee.getIngredients();
-        for (Ingredient ingredientInMachine : machine.getStorage().getStorageInfo()) {
-            for (Ingredient ingredient : ingredientsForCoffee) {
-                if (ingredientInMachine.equals(ingredient)) {
-                    ingredientInMachine.use(ingredient.getAmount());
-                }
-            }
-        }
+        machine.getStorage().getStorageInfo().forEach(ingredientInMachine ->
+                ingredientsForCoffee.stream()
+                .filter(ingredientInMachine::equals)
+                .forEach(ingredient -> ingredientInMachine.use(ingredient.getAmount())));
     }
 
     @Override
@@ -50,6 +47,7 @@ public class Maker implements Command {
 
     @Override
     public int countPrice(Coffee coffee) {
+        System.out.println(this + "Cant do anything");
         return -1;
     }
 }

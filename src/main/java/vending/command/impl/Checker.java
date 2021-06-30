@@ -19,6 +19,19 @@ public class Checker implements Command {
         return checkIngredients(coffee);
     }
 
+    private boolean checkIngredients(Coffee coffee) {
+        Set<Ingredient> ingredientsForCoffeeAmounts = coffee.getIngredients();
+        Set<Ingredient> machineStore = machine.getStorage().getStorageInfo();
+        boolean result = ingredientsForCoffeeAmounts.stream()
+                .noneMatch(ingredientForCoffee -> machineStore.stream()
+                        .anyMatch(ingredientInStore -> ingredientInStore.equals(ingredientForCoffee)
+                                & ingredientInStore.getAmount() < ingredientForCoffee.getAmount()));
+        if(!result){
+            System.out.println("Not enough ingredients");
+        }
+        return result;
+    }
+
     @Override
     public boolean execute(Ingredient ingredient, int newPrice) {
         System.out.println(this + "Cant do anything");
@@ -27,22 +40,7 @@ public class Checker implements Command {
 
     @Override
     public int countPrice(Coffee coffee) {
-        return 0;
-    }
-
-    private boolean checkIngredients(Coffee coffee) {
-        Set<Ingredient> ingredientsForCoffeeAmounts = coffee.getIngredients();
-        Set<Ingredient> machineStore = machine.getStorage().getStorageInfo();
-        for (Ingredient ingredientForCoffee : ingredientsForCoffeeAmounts) {
-            for (Ingredient ingredientInStore : machineStore) {
-                if (ingredientInStore.equals(ingredientForCoffee)) {
-                    if (ingredientInStore.getAmount() <= ingredientForCoffee.getAmount()) {
-                        System.out.printf("Not enough %s.\n", ingredientInStore.getName());
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
+        System.out.println(this + "Cant do anything");
+        return -1;
     }
 }

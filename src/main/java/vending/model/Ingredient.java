@@ -26,9 +26,8 @@ public class Ingredient {
     public void replenish(Ingredient ingredient, int newPrice) {
         int temp = (int) (price * amount + newPrice);
         this.amount = this.amount + ingredient.amount;
-        temp = 100 * temp / amount;
-
-        this.price = (double) temp / 100.;
+        temp = 1000 * temp / amount;
+        this.price = (double) temp / 1000.;
     }
 
     public void calculatePrice(int price) {
@@ -37,10 +36,6 @@ public class Ingredient {
 
     public void use(int amount) {
         this.amount -= amount;
-    }
-
-    public IngredientName getName() {
-        return name;
     }
 
     @Override
